@@ -15,35 +15,45 @@
             border-radius: 1rem;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
+        .btn {
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .btn-primary {
+            background-color: #4f46e5;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #4338ca;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 p-4 md:p-8">
 
     <div id="app" class="w-full max-w-7xl mx-auto">
         
-        <!-- Header -->
         <div class="text-center mb-8">
             <h1 class="text-4xl font-bold">PRF Synthesizer (Wangari Maathai Demo)</h1>
             <p class="text-gray-600 mt-2">This is a pre-populated example to demonstrate the potential of the PRF analysis.</p>
         </div>
 
-        <!-- Main Workspace -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
-            <!-- Left Column: Info -->
             <div class="lg:col-span-1 space-y-6">
                 <div class="card p-6">
                     <h2 class="text-xl font-bold mb-4">About This Demo</h2>
-                    <p class="text-gray-700 mb-4">The text in these boxes has been pre-filled with reflections from the perspective of Wangari Maathai, based on her writings and life.</p>
-                    <p class="text-gray-700">Notice how her framework integrates environmental, social, and political concerns into a single, coherent vision. This is the level of detail to aim for in your own work.</p>
+                    <p class="text-gray-700 mb-4">The text in these boxes has been pre-filled with reflections from the perspective of Wangari Maathai, based on her writings and life's work.</p>
+                    <p class="text-gray-700">Read through the reflections, and then use the button below to load this data into the main Synthesizer app for analysis.</p>
+                    <button id="load-demo-btn" class="btn btn-primary w-full mt-4 py-3 rounded-lg font-semibold">Load this Demo into Synthesizer</button>
                 </div>
                  <div class="card p-6">
                     <h2 class="text-xl font-bold mb-4">Your Task</h2>
-                    <p class="text-gray-700">Read through these reflections and the sample synthesis. Then, read the AI's feedback to see how it identifies themes and asks deeper questions. Use this as a model for your own PRF project.</p>
+                    <p class="text-gray-700">After loading the data, open the main PRF Synthesizer. You can then use the "Guided Synthesis" feature to have a conversation with the AI tutor about this example, providing a model for your own analysis.</p>
                 </div>
             </div>
 
-            <!-- Right Column: Synthesis & Analysis -->
             <div class="lg:col-span-2 space-y-6">
                 <div class="card p-6">
                     <h2 class="text-xl font-bold mb-4">Review of Pre-populated Data</h2>
@@ -60,7 +70,7 @@
                     <h2 class="text-xl font-bold mb-4">Sample Synthesis</h2>
                     <textarea id="synthesis-input" class="w-full h-80 p-3 border border-gray-300 rounded-lg" readonly></textarea>
                     
-                    <div id="ai-analysis-card" class="mt-6">
+                    <div class="mt-6">
                         <h3 class="font-semibold mb-2 text-indigo-700 text-xl">Sample AI Analysis & Feedback</h3>
                         <div id="ai-analysis-display" class="w-full min-h-[100px] p-3 bg-gray-50 border rounded-lg whitespace-pre-wrap"></div>
                     </div>
@@ -83,20 +93,53 @@
             };
 
             const demoData = {
-                beliefs: `(General)\nMy core belief is that peace on earth depends on our ability to secure our living environment. There is an unbreakable link between a healthy environment, good governance, and peace. We cannot have one without the others. The health of our land is a direct reflection of the health of our society.\n\n(Specific Challenge: Deforestation in Kenya)\nMy belief about this challenge is that deforestation is not simply an environmental issue; it is a social and political one. It is a symptom of a disempowered populace, particularly rural women, who lack the resources and agency to protect their own communities. Planting a tree, therefore, is an act of both ecological restoration and political empowerment.`,
-                rules: `(General)\nA rule I live by is to act locally while thinking globally. Grand plans are meaningless without concrete, grassroots action. The Green Belt Movement was founded on the simple rule of paying women to plant trees. This small act addresses poverty, deforestation, and soil erosion all at once.\n\n(Specific Challenge: Deforestation in Kenya)\nMy rule in facing government opposition was to speak truth to power, without violence. When our work was threatened, the rule was not to retreat, but to use the very trees we planted as symbols of our peaceful resistance. We insisted that protecting the environment was not a political crime, but a civic duty.`,
-                ontology: `(General)\nThe most real things are the tangible, living systems that sustain us: the soil, the water, the forests. Political power and economic figures are abstract and fleeting, but the health of the land is a concrete reality that determines the well-being of future generations. My ontology is grounded in the earth itself.\n\n(Specific Challenge: Deforestation in Kenya)\nThe government saw this land as a resource to be exploited for short-term profit. I saw it as a sacred trust. The 'real' thing at stake was not just timber, but the future of our communities. My interpretation was that the soil itself was a stakeholder in our political process, and I was there to speak on its behalf.`,
-                authenticity: `(General)\nMy authentic self is a scientist who became an activist. My training in biology gave me the evidence, but my values as a Kenyan woman gave me the motivation. I feel most authentic when I am using my scientific knowledge to empower people who have been denied a voice. To have remained in a laboratory while the forests were disappearing would have been a betrayal of my identity.\n\n(Specific Challenge: Deforestation in Kenya)\nI faced immense pressure to be a 'proper' woman and not to challenge the authorities. The 'mask' I refused to wear was that of quiet compliance. The cost was imprisonment and physical assault. But to be authentic, I had to be willing to suffer for what I knew to be true. My authenticity was found in the courage to be a troublemaker for the sake of peace.`,
-                assembly_history: `My assembly history is a story of two worlds. I grew up in rural Kenya, with a deep, traditional respect for the earth. Then, my advanced education in the United States and Germany gave me a scientific framework to understand ecology. The Green Belt Movement was the integration of these two parts of my history: combining the scientific understanding of ecosystems with the practical, community-based wisdom of the women I grew up with.`,
-                future_pull: `My 'future pull' was a vision of a democratic and environmentally stable Kenya. The capability I sought to build in others was a sense of their own power and agency. Planting a tree became a symbol of hope and a practical lesson in self-determination. My legacy is not just the 51 million trees, but the network of empowered women who continue to fight for their communities and their land.`,
-                synthesis: `My Personal Reality Framework is built on the ontological conviction that social justice and environmental health are the same thing. This belief, forged in my 'assembly history' of both traditional Kenyan values and Western scientific training, led to a simple, powerful rule: empower women to plant trees. This single action became the core of my life's work.\n\nThis framework created a direct conflict with the authoritarian government, which saw my environmentalism as a political threat. To be authentic, I had to embrace the role of an activist, even at great personal risk. My 'future pull'—a vision of a green and peaceful Kenya—was the force that sustained me. My synthesis is that the most profound act of peace is to restore the earth, and the most effective way to do that is to place power and resources in the hands of the women who are its most dedicated stewards.`,
-                ai: `Thank you for these inspiring and deeply integrated reflections. Your framework demonstrates a remarkable fusion of scientific knowledge, grassroots activism, and political courage.\n\n**Key Themes:**\n1.  **Holistic Justice:** A powerful theme is your insistence that environmental, social, and political issues are inseparable. You don't see them as separate categories, but as interconnected parts of a single system.\n2.  **Empowerment Through Action:** Your framework is not theoretical; it is grounded in a simple, concrete action—planting a tree. You use this act as a tool to build women's agency, restore ecosystems, and challenge corrupt power structures all at once.\n3.  **The Scientist as Activist:** You embody a powerful form of authenticity where scientific knowledge is not an end in itself, but a tool in service of justice. Your identity is a seamless blend of rigorous training and passionate advocacy.\n\n**Potential Tensions:**\n- Your framework emphasizes grassroots, community-level action. How do you reconcile this bottom-up approach with the reality that many environmental problems (like climate change) require large-scale, top-down international agreements and government regulations?\n\n**A Question for Deeper Synthesis:**\n- You successfully integrated your traditional Kenyan upbringing with your Western scientific education. What can your life's synthesis teach us about how we can bridge the gap between indigenous ecological wisdom and modern scientific approaches to solve today's environmental crises?`
+                beliefs: `My fundamental belief is in the interconnectedness of our world. I believe that a healthy environment is the foundation for a stable democracy, sustainable development, and peace. I do not see these as separate issues. A second core belief is in the power of grassroots action, particularly the power of women. I have seen time and again that when you empower women with knowledge and resources, they become powerful agents of change for their entire community.`,
+                rules: `A primary rule of the Green Belt Movement was to "start small, but think big." We began by planting just seven trees, but the vision was always to reforest a nation. Another rule was to "link the local to the global." I taught the women that planting a tree was not just about firewood or soil conservation; it was about protecting biodiversity, combating climate change, and demanding their democratic rights. Finally, a personal rule was to "speak truth to power," even when it was dangerous. I refused to be intimidated by a corrupt government that saw our environmental work as a political threat.`,
+                ontology: `My ontology was holistic and ecological. For me, a tree was never just a tree; it was a part of a complex system that provided clean air, water, food, and economic stability. The 'real' problem was not the lack of trees, but the political and economic systems that created the conditions for deforestation in the first place. I saw reality as a set of nested systems, from the local watershed to the global climate, and I believed that a problem in one part of the system would inevitably affect all the others.`,
+                authenticity: `Authenticity for me meant living in a way that was true to my scientific training, my Kikuyu heritage, and my conscience. It would have been inauthentic to be an educated biologist and ignore the environmental destruction I saw all around me. My authentic self was the one who could speak the language of science to international bodies and the language of community to the rural women of Kenya. Authenticity was tested when I was arrested, beaten, and vilified by the government. In those moments, my authentic self was the one that refused to be silenced, because my core values were more important than my personal safety.`,
+                assembly_history: `My assembly history is a story of bridging worlds. I grew up in a rural village in Kenya, close to the land. This was followed by a scientific education in the United States, which gave me a different, but complementary, understanding of the natural world. This fusion of traditional knowledge and modern science was the key event in my formation. When I returned to Kenya, I saw the environmental degradation with two sets of eyes, and this allowed me to create a solution—the Green Belt Movement—that was both scientifically sound and culturally resonant.`,
+                future_pull: `My 'future pull' was the vision of a green, peaceful, and democratic Africa. I envisioned a future where communities, especially women, were empowered to be stewards of their own environment and masters of their own destiny. This vision of a restored and self-reliant Kenya created a present constraint, compelling me to act. Every tree we planted was a small act of building that future. The Nobel Peace Prize was not an endpoint, but an affirmation that our vision—that peace is rooted in a healthy environment—was a truth the world was ready to hear.`,
+                synthesis: `My framework is built on the simple but profound belief that our environment is the foundation of our society. This is not a political opinion; it is an ecological reality. This ontological commitment to a holistic, interconnected world directly informs my primary rule: to empower grassroots movements, particularly women, to be the agents of their own environmental and democratic renewal.\n\nMy personal authenticity was found in the act of bridging my scientific education with my cultural roots. My assembly history gave me a unique voice to speak to both worlds. To see the degradation of my home and do nothing would have been a betrayal of everything I was. The 'future pull' of a green and peaceful Africa provided the roadmap for the Green Belt Movement. My synthesis is this: sustainable development, democracy, and peace are not separate goals. They are three legs of the same stool. You cannot have one without the others. Our work is not just about planting trees; it is about planting the seeds of a more just and sustainable future.`,
+                ai: `Thank you for these powerful and integrated reflections. Your framework demonstrates a profound and holistic understanding of the connections between the environment, society, and peace.\n\n**Key Themes:**\n1.  **Holistic Interconnection:** The central theme is your unwavering belief that environmental health, democratic governance, women's rights, and peace are inextricably linked. You consistently break down the artificial barriers between these issues.\n2.  **Grassroots Empowerment:** You have a deep faith in the power of ordinary people, especially women, to create extraordinary change. Your work is not about top-down solutions, but about providing the tools and knowledge for communities to save themselves.\n3.  **Bridging Worlds:** Your assembly history gave you a unique ability to connect different forms of knowledge—scientific and traditional, local and global. This became a core strength, allowing you to create solutions that were both effective and culturally appropriate.\n\n**Potential Tensions:**\n- You often had to work against a corrupt and violent authoritarian government. How did you maintain your commitment to peaceful, grassroots action when the system you were opposing was anything but peaceful?\n\n**A Question for Deeper Synthesis:**\n- The Green Belt Movement was incredibly successful in mobilizing communities for a shared purpose. What are the key lessons from your movement that could be applied to other major global challenges, like political polarization or the spread of misinformation, that also require a sense of shared reality and collective action?`
             };
 
+            const loadDemoBtn = document.getElementById('load-demo-btn');
+            const DATA_KEYS = {
+                beliefs: 'prf_beliefs_data',
+                rules: 'prf_rules_data',
+                ontology: 'prf_ontology_data',
+                authenticity: 'prf_authenticity_data',
+                assembly_history: 'prf_assembly_history_data',
+                future_pull: 'prf_future_pull_data'
+            };
+
+            function showMessage(message, type = 'success') {
+                const toast = document.createElement('div');
+                toast.textContent = message;
+                let bgColor = type === 'success' ? 'bg-green-600' : 'bg-red-600';
+                toast.className = `fixed top-5 left-1/2 -translate-x-1/2 ${bgColor} text-white px-6 py-3 rounded-lg shadow-lg transition-opacity duration-300`;
+                document.body.appendChild(toast);
+                setTimeout(() => toast.style.opacity = '0', 2700);
+                setTimeout(() => toast.remove(), 3000);
+            }
+            
+            // Populate the display boxes on page load
             Object.keys(displays).forEach(key => {
                 if (demoData[key]) {
                     displays[key].value = demoData[key];
                     displays[key].textContent = demoData[key];
+                }
+            });
+
+            loadDemoBtn.addEventListener('click', () => {
+                try {
+                    Object.keys(DATA_KEYS).forEach(key => {
+                        localStorage.setItem(DATA_KEYS[key], demoData[key]);
+                    });
+                    showMessage('Demo data has been successfully saved to your browser. You can now load it in the main PRF Synthesizer app.');
+                } catch (e) {
+                    console.error("Error saving to localStorage:", e);
+                    showMessage('Could not save demo data. Your browser may be in private mode or have storage disabled.', 'error');
                 }
             });
         });
